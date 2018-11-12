@@ -1,0 +1,10 @@
+flask
+gunicorn
+pytest
+ipython
+pymodm
+numpy
+pytest
+pytest-pep8
+pytest-cov
+sphinx
