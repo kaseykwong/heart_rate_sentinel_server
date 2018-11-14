@@ -17,6 +17,7 @@ class Patient(MongoModel):
     user_age = fields.IntegerField()
     heart_rate = fields.ListField(field=fields.IntegerField())
     heart_rate_time = fields.ListField(field=fields.DateTimeField())
+    created = fields.DateTimeField()
 
 
 def check_exist(info):
@@ -35,6 +36,7 @@ def new_patient():
     if valid_check is True:
         if check_exist(info) is False:
                 patient = create_user(info)
+                print("Patient successfully saved.")
         else:
             print("Patient_ID already exists, please enter new ID. ")
             logging.error("Patient_ID already exists, please enter new ID. ")
@@ -46,12 +48,14 @@ def new_patient():
 
 
 def create_user(info):
+    set_logging()
     patient_number = info["patient_id"]
     email = info["attending_email"]
     age = info["user_age"]
-    p = Patient(patient_id=patient_number, attending_email=email, user_age=age, heart_rate=[], heart_rate_time=[])
-    logging.info("New Patient Added. ")
+    time_initialize = datetime.now()
+    p = Patient(patient_number, email, age, [50], [time_initialize], time_initialize)
     p.save()
+    logging.info("New Patient Added. ")
     patient = {
         "Message": "New Patient successfully added.",
         "Patient ID": info["patient_id"],
@@ -108,6 +112,7 @@ def check_new_info(info):
 
 @app.route("/api/heart_rate", methods=["POST"])
 def heart_rate():
+    set_logging()
     data = request.get_json()
     if check_hr_input(data) is True:
         patient_number = data["patient_id"]
@@ -130,11 +135,14 @@ def heart_rate():
     return jsonify(data), 200
 
 
-
 def add_heart_rate(patient_id, hr, time):
     p = Patient.objects.raw({"_id": patient_id}).first()
-    p.heart_rate.append(hr)
-    p.heart_rate_times.append(time)
+    if p.heart_rate_times[0] == p.created:
+        p.heart_rate_times[0] = time
+        p.heart_rate[0] = hr
+    else:
+        p.heart_rate.append(hr)
+        p.heart_rate_times.append(time)
     p.save()
 
 
@@ -174,42 +182,53 @@ def check_hr_input(info):
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
 def status(patient_id):
+    set_logging()
     try:
-        status = get_status(patient_id)
+        condition = get_status(patient_id)
     except pymodm.errors.DoesNotExist:
         message = "No Data associated with Patient ID"
         logging.error(message)
         print(message)
         return message, 400
-    return jsonify(status), 200
+    return jsonify(condition), 200
 
 
 def get_status(patient_id):
-        patient = Patient.objects.raw({"_id": patient_id}).first()
-        hr = patient.heart_rate[-1]
-        condition = diagnosis(hr)
-        hr_t = patient.heart_rate_time[-1]
-        status = {
-            "Patient ID": patient_id,
-            "Most Recent Heart Rate": hr_t,
-            "Status": condition
-        }
-        return status
+    patient = Patient.objects.raw({"_id": patient_id}).first()
+    hr = patient.heart_rate[-1]
+    condition = diagnosis(hr, patient.user_age)
+    hr_t = patient.heart_rate_time[-1]
+    data = {
+        "Patient ID": patient_id,
+        "Most Recent Heart Rate": hr_t,
+        "Status": condition
+    }
+    return data
 
 
-def diagnosis(hr):
+def diagnosis(hr, age):
+    set_logging()
     condition = "Normal"
-    if hr > 100:
+    if age <= 1 and hr >= 159:
         condition = "Tachycardia"
-        logging.warning("Patient has tachycardia.")
-    if hr < 60:
-        condition = "Bradycardia"
-        logging.warning("Patient has bradycardia.")
+    elif age <= 2 and hr >= 151:
+        condition = "Tachycardia"
+    elif age <= 4 and hr >= 137:
+        condition = "Tachycardia"
+    elif age <= 7 and hr >= 133:
+        condition = "Tachycardia"
+    elif age <= 11 and hr >= 130:
+        condition = "Tachycardia"
+    elif age <= 15 and hr >= 119:
+        condition = "Tachycardia"
+    elif hr >= 100:
+        condition = "Tachycardia"
     return condition
 
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
-def heart_rate(patient_id):
+def heart_rate_patient(patient_id):
+    #patient_id = int(patient_id)
     set_logging()
     try:
         data = print_user(patient_id)
@@ -234,6 +253,7 @@ def print_user(patient_id):
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
 def average_patient(patient_id):
+    set_logging()
     try:
         hr = return_hr(patient_id)
         av = average_hr(hr)
@@ -248,10 +268,11 @@ def average_patient(patient_id):
     return jsonify(result), 200
 
 
-def average_hr(heart_rate):
-    if len(heart_rate) is 1:
+def average_hr(hr):
+    set_logging()
+    if len(hr) is 1:
         logging.warning("Average is calculated for only one heart rate!")
-    average = np.mean(heart_rate)
+    average = np.mean(hr)
     logging.info("Average heart rate calculated successfully.")
     return average
 
@@ -266,6 +287,7 @@ def return_hr(patient_id):
 
 @app.route("/api/heart_rate/interval_average", methods=["POST"])
 def interval_average():
+    set_logging()
     info = request.get_json()
     if check_interval(info) is True:
         if check_exist(info) is True:
@@ -345,4 +367,4 @@ def set_logging():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host="127.0.0.1", port=5002)

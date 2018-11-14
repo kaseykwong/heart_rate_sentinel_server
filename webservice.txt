@@ -1,0 +1,271 @@
+11/13/2018 03:57:35 PM Data input is OK. 
+11/13/2018 03:57:35 PM New Patient Added. 
+11/13/2018 03:57:35 PM Exception on /api/new_patient [POST]
+Traceback (most recent call last):
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server.py", line 37, in new_patient
+    patient = create_user(info)
+  File "server.py", line 55, in create_user
+    p.save()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 464, in save
+    self.full_clean()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 381, in full_clean
+    self.clean_fields(exclude=exclude)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 367, in clean_fields
+    raise ValidationError(error_dict)
+pymodm.errors.ValidationError: {'heart_rate': ['must not be blank (was: [])'], 'heart_rate_time': ['must not be blank (was: [])']}
+11/13/2018 03:57:35 PM 127.0.0.1 - - [13/Nov/2018 15:57:35] "POST /api/new_patient HTTP/1.1" 500 -
+11/13/2018 04:02:48 PM Data input is OK. 
+11/13/2018 04:02:48 PM New Patient Added. 
+11/13/2018 04:02:48 PM Exception on /api/new_patient [POST]
+Traceback (most recent call last):
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server.py", line 37, in new_patient
+    patient = create_user(info)
+  File "server.py", line 55, in create_user
+    p.save()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 464, in save
+    self.full_clean()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 381, in full_clean
+    self.clean_fields(exclude=exclude)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 367, in clean_fields
+    raise ValidationError(error_dict)
+pymodm.errors.ValidationError: {'heart_rate': ['must not be blank (was: [])'], 'heart_rate_time': ['must not be blank (was: [])']}
+11/13/2018 04:02:48 PM 127.0.0.1 - - [13/Nov/2018 16:02:48] "POST /api/new_patient HTTP/1.1" 500 -
+11/13/2018 04:04:18 PM Data input is OK. 
+11/13/2018 04:04:19 PM New Patient Added. 
+11/13/2018 04:04:19 PM Exception on /api/new_patient [POST]
+Traceback (most recent call last):
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server.py", line 37, in new_patient
+    patient = create_user(info)
+  File "server.py", line 55, in create_user
+    logging.info("New Patient Added. ")
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 464, in save
+    self.full_clean()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 381, in full_clean
+    self.clean_fields(exclude=exclude)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 367, in clean_fields
+    raise ValidationError(error_dict)
+pymodm.errors.ValidationError: {'heart_rate': ['must not be blank (was: [])'], 'heart_rate_time': ['must not be blank (was: [])']}
+11/13/2018 04:04:19 PM 127.0.0.1 - - [13/Nov/2018 16:04:19] "POST /api/new_patient HTTP/1.1" 500 -
+11/13/2018 04:05:28 PM Data input is OK. 
+11/13/2018 04:05:28 PM New Patient Added. 
+11/13/2018 04:05:28 PM Exception on /api/new_patient [POST]
+Traceback (most recent call last):
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server.py", line 37, in new_patient
+    patient = create_user(info)
+  File "server.py", line 55, in create_user
+    logging.info("New Patient Added. ")
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 464, in save
+    self.full_clean()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 381, in full_clean
+    self.clean_fields(exclude=exclude)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 367, in clean_fields
+    raise ValidationError(error_dict)
+pymodm.errors.ValidationError: {'heart_rate': ['must not be blank (was: [])'], 'heart_rate_time': ['must not be blank (was: [])']}
+11/13/2018 04:05:28 PM 127.0.0.1 - - [13/Nov/2018 16:05:28] "POST /api/new_patient HTTP/1.1" 500 -
+11/13/2018 04:10:15 PM Data input is OK. 
+11/13/2018 04:10:15 PM New Patient Added. 
+11/13/2018 04:10:15 PM Exception on /api/new_patient [POST]
+Traceback (most recent call last):
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server.py", line 37, in new_patient
+    patient = create_user(info)
+  File "server.py", line 55, in create_user
+    logging.info("New Patient Added. ")
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 464, in save
+    self.full_clean()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 381, in full_clean
+    self.clean_fields(exclude=exclude)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 367, in clean_fields
+    raise ValidationError(error_dict)
+pymodm.errors.ValidationError: {'heart_rate': ['must not be blank (was: [])'], 'heart_rate_time': ['must not be blank (was: [])']}
+11/13/2018 04:10:15 PM 127.0.0.1 - - [13/Nov/2018 16:10:15] "POST /api/new_patient HTTP/1.1" 500 -
+11/13/2018 04:12:42 PM Data input is OK. 
+11/13/2018 04:12:42 PM New Patient Added. 
+11/13/2018 04:12:42 PM Exception on /api/new_patient [POST]
+Traceback (most recent call last):
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server.py", line 37, in new_patient
+    patient = create_user(info)
+  File "server.py", line 56, in create_user
+    p.save()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 464, in save
+    self.full_clean()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 381, in full_clean
+    self.clean_fields(exclude=exclude)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 367, in clean_fields
+    raise ValidationError(error_dict)
+pymodm.errors.ValidationError: {'heart_rate': ['must not be blank (was: [])'], 'heart_rate_time': ['must not be blank (was: [])']}
+11/13/2018 04:12:42 PM 127.0.0.1 - - [13/Nov/2018 16:12:42] "POST /api/new_patient HTTP/1.1" 500 -
+11/13/2018 04:16:51 PM Data input is OK. 
+11/13/2018 04:16:51 PM New Patient Added. 
+11/13/2018 04:16:51 PM Exception on /api/new_patient [POST]
+Traceback (most recent call last):
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server.py", line 37, in new_patient
+    patient = create_user(info)
+  File "server.py", line 56, in create_user
+    p.save()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 464, in save
+    self.full_clean()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 381, in full_clean
+    self.clean_fields(exclude=exclude)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 367, in clean_fields
+    raise ValidationError(error_dict)
+pymodm.errors.ValidationError: {'heart_rate': ['must not be blank (was: [])'], 'heart_rate_time': ['must not be blank (was: [])']}
+11/13/2018 04:16:51 PM 127.0.0.1 - - [13/Nov/2018 16:16:51] "POST /api/new_patient HTTP/1.1" 500 -
+11/13/2018 04:25:12 PM Data input is OK. 
+11/13/2018 04:25:13 PM New Patient Added. 
+11/13/2018 04:25:13 PM Exception on /api/new_patient [POST]
+Traceback (most recent call last):
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server.py", line 37, in new_patient
+    patient = create_user(info)
+  File "server.py", line 56, in create_user
+    p.save()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 464, in save
+    self.full_clean()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 381, in full_clean
+    self.clean_fields(exclude=exclude)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 367, in clean_fields
+    raise ValidationError(error_dict)
+pymodm.errors.ValidationError: {'heart_rate': ['must not be blank (was: [])'], 'heart_rate_time': ['must not be blank (was: [])']}
+11/13/2018 04:25:13 PM 127.0.0.1 - - [13/Nov/2018 16:25:13] "POST /api/new_patient HTTP/1.1" 500 -
+11/13/2018 04:28:10 PM Data input is OK. 
+11/13/2018 04:28:11 PM New Patient Added. 
+11/13/2018 04:28:11 PM 127.0.0.1 - - [13/Nov/2018 16:28:11] "POST /api/new_patient HTTP/1.1" 200 -
+11/13/2018 04:31:24 PM No data associated with patient id.
+11/13/2018 04:31:24 PM 127.0.0.1 - - [13/Nov/2018 16:31:24] "GET /api/heart_rate/1 HTTP/1.1" 400 -
+11/13/2018 04:31:26 PM 127.0.0.1 - - [13/Nov/2018 16:31:26] "GET /favicon.ico HTTP/1.1" 404 -
+11/13/2018 04:31:52 PM No data associated with patient id.
+11/13/2018 04:31:52 PM 127.0.0.1 - - [13/Nov/2018 16:31:52] "GET /api/heart_rate/1 HTTP/1.1" 400 -
+11/13/2018 04:32:03 PM No data associated with patient id.
+11/13/2018 04:32:03 PM 127.0.0.1 - - [13/Nov/2018 16:32:03] "GET /api/heart_rate/10 HTTP/1.1" 400 -
+11/13/2018 08:41:27 PM Data input is OK. 
+11/13/2018 08:41:27 PM Exception on /api/new_patient [POST]
+Traceback (most recent call last):
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "server.py", line 38, in new_patient
+    patient = create_user(info)
+  File "server.py", line 57, in create_user
+    p.save()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 464, in save
+    self.full_clean()
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 381, in full_clean
+    self.clean_fields(exclude=exclude)
+  File "/Users/kaseykwong/heart_rate_sentinel_server/.venv/lib/python3.6/site-packages/pymodm/base/models.py", line 367, in clean_fields
+    raise ValidationError(error_dict)
+pymodm.errors.ValidationError: {'heart_rate': ["'int' object is not iterable"], 'heart_rate_time': ["'datetime.datetime' object is not iterable"]}
+11/13/2018 08:41:27 PM 127.0.0.1 - - [13/Nov/2018 20:41:27] "POST /api/new_patient HTTP/1.1" 500 -
+11/13/2018 08:42:41 PM Data input is OK. 
+11/13/2018 08:42:41 PM New Patient Added. 
+11/13/2018 08:42:41 PM 127.0.0.1 - - [13/Nov/2018 20:42:41] "POST /api/new_patient HTTP/1.1" 200 -
+11/13/2018 08:43:37 PM No data associated with patient id.
+11/13/2018 08:43:37 PM 127.0.0.1 - - [13/Nov/2018 20:43:37] "GET /api/heart_rate/2 HTTP/1.1" 400 -
+11/13/2018 08:50:18 PM 127.0.0.1 - - [13/Nov/2018 20:50:18] "GET /api/heart_rate/2 HTTP/1.1" 200 -
+11/13/2018 08:50:57 PM 127.0.0.1 - - [13/Nov/2018 20:50:57] "GET /api/heart_rate/10 HTTP/1.1" 200 -
+11/13/2018 08:51:06 PM No data associated with patient id.
+11/13/2018 08:51:06 PM 127.0.0.1 - - [13/Nov/2018 20:51:06] "GET /api/heart_rate/1 HTTP/1.1" 400 -
+11/13/2018 08:52:10 PM 127.0.0.1 - - [13/Nov/2018 20:52:10] "GET /api/heart_rate/2 HTTP/1.1" 200 -
