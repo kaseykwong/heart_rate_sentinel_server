@@ -37,3 +37,5 @@ python3.6 server.py
 python3.6 main.py
 
 ```
+
+Travis Build Status: [![Build Status](https://travis-ci.com/kaseykwong/heart_rate_sentinel_server.svg?branch=master)](https://travis-ci.com/kaseykwong/heart_rate_sentinel_server)

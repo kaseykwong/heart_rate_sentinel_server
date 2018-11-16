@@ -3,6 +3,7 @@ from server import check_hr_input, check_interval, check_new_info, \
 import pytest
 from datetime import datetime
 
+
 def test_check_hr_input():
     good_input1 = {
         "patient_id": "2",
@@ -76,10 +77,14 @@ def test_diagnosis_parametrize(a, b, expected):
 
 
 def test_interval():
-    hr_t = [datetime.strptime("2018-07-09 11:00:36.378429","%Y-%m-%d %H:%M:%S.%f"),
-            datetime.strptime("2018-07-09 11:20:36.378429","%Y-%m-%d %H:%M:%S.%f"),
-            datetime.strptime("2018-07-09 11:40:36.378429","%Y-%m-%d %H:%M:%S.%f"),
-            datetime.strptime("2018-07-09 12:00:36.378429","%Y-%m-%d %H:%M:%S.%f")]
+    hr_t = [datetime.strptime("2018-07-09 11:00:36.378429",
+                              "%Y-%m-%d %H:%M:%S.%f"),
+            datetime.strptime("2018-07-09 11:20:36.378429",
+                              "%Y-%m-%d %H:%M:%S.%f"),
+            datetime.strptime("2018-07-09 11:40:36.378429",
+                              "%Y-%m-%d %H:%M:%S.%f"),
+            datetime.strptime("2018-07-09 12:00:36.378429",
+                              "%Y-%m-%d %H:%M:%S.%f")]
     hr = [50, 87, 79, 99]
     time_since = "2018-07-09 11:15:36.378429"
     int_avg = round(interval(hr, hr_t, time_since))

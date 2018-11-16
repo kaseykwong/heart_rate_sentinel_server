@@ -10,7 +10,8 @@ import os
 from sendgrid.helpers.mail import *
 
 
-connect("mongodb://kck22:5chool@ds255403.mlab.com:55403/bme590")  # connect to database
+connect("mongodb://kck22:5chool@ds255403.mlab.com:55403/bme590")
+# connect to database
 app = Flask(__name__)
 
 
@@ -71,7 +72,8 @@ def new_patient():
 def create_user(info):
     """
     Creates a new patient in the server
-    :param info: json request file containing patient id, attending email, user age
+    :param info: json request file containing patient id, attending email,
+    user age
     :return:
     """
     set_logging()
@@ -79,7 +81,8 @@ def create_user(info):
     a_email = info["attending_email"]
     age = info["user_age"]
     time_initialize = datetime.now()
-    p = Patient(patient_number, a_email, age, [50], [time_initialize], time_initialize)
+    p = Patient(patient_number, a_email, age, [50],
+                [time_initialize], time_initialize)
     p.save()
     logging.info("New Patient Added. ")
     patient = {
@@ -161,9 +164,12 @@ def heart_rate():
                 "Current Time": curr_time
             }
         else:
-            print("Patient ID doesn't exist. Please create new patient first.")
-            logging.error("Patient ID doesn't exist. Please create new patient first.")
-            return "Patient ID doesn't exist. Please create new patient first.", 400
+            print("Patient ID doesn't exist. Please create new "
+                  "patient first.")
+            logging.error("Patient ID doesn't exist. Please create"
+                          " new patient first.")
+            return "Patient ID doesn't exist. Please create new " \
+                   "patient first.", 400
     else:
         logging.error("Invalid Input")
         return "Invalid Input", 400
@@ -201,8 +207,9 @@ def send_email(a_email, patient_id):
     from_email = Email("kck22@duke.edu")
     to_email = Email(a_email)
     subject = "Patient Heart Rate Warning"
-    content = Content("text/plain", "Patient:" + patient_id + " has shown signs of tachycardia based on "
-                                                              "most recent heart rate.")
+    content = Content("text/plain", "Patient:" + patient_id +
+                      " has shown signs of tachycardia based on most "
+                      "recent heart rate.")
     mail = Mail(from_email, subject, to_email, content)
     response = sg.client.mail.send.post(request_body=mail.get())
     print(response.status_code)
@@ -422,7 +429,8 @@ def interval_average():
                 return message, 400
         else:
             print("Patient ID doesn't exist. Please create new patient first.")
-            logging.error("Patient ID doesn't exist. Please create new patient first.")
+            logging.error("Patient ID doesn't exist. Please "
+                          "create new patient first.")
             return 400
     else:
         logging.error("Invalid Input")
@@ -440,7 +448,7 @@ def interval(hr, hr_t, t_since):
     """
     hr_since = []
     for n, t in enumerate(hr_t):
-        if t > datetime.strptime(t_since,"%Y-%m-%d %H:%M:%S.%f"):
+        if t > datetime.strptime(t_since, "%Y-%m-%d %H:%M:%S.%f"):
             hr_since.append(hr[n])
     average = average_hr(hr_since)
     return average
@@ -471,12 +479,14 @@ def check_interval(info):
                                  "%Y-%m-%d %H:%M:%S.%f")
         logging.info("%s%s", "Time requested is valid: ", time)
     except KeyError:
-        msg = "Requested Time Error. No input provided for 'heart_rate_average_since'."
+        msg = "Requested Time Error. No input provided " \
+              "for 'heart_rate_average_since'."
         print(msg)
         logging.error(msg)
         return False
     except ValueError:
-        msg = "Requested Time Error. 'heart_rate_average_since' input must be a datetime."
+        msg = "Requested Time Error. 'heart_rate_average_since' " \
+              "input must be a datetime."
         logging.error(msg)
         print(msg)
         return False
