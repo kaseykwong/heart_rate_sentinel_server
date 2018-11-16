@@ -22,10 +22,6 @@ source .venv/bin/activate
 Install requirements.txt
 pip install -r requirements.txt
 
-Run this to setup SENDGRID API:
-echo "export SENDGRID_API_KEY='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'" > sendgrid.env
-echo "sendgrid.env" >> .gitignore
-source ./sendgrid.env
 
 pip install sendgrid
 
