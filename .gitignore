@@ -5,3 +5,7 @@ __pycache__/
 .env/env/venv/
 .coverage
 db
+sendgrid.env
+sendgrid.env
+sendgrid.env
+sendgrid.env
