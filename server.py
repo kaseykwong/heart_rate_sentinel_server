@@ -5,13 +5,26 @@ import pymodm
 from datetime import datetime
 import numpy as np
 import logging
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
 
 
-connect("mongodb://kck22:5chool@ds255403.mlab.com:55403/bme590")  # connect to database
+connect("mongodb://kck22:5chool@ds255403.mlab.com:55403/bme590")
+# connect to database
 app = Flask(__name__)
 
 
 class Patient(MongoModel):
+    """
+    Patient Class
+    Includes:
+        Patient ID
+        Attending Physician Email
+        Patient Age
+        Recorded Heart Rates
+        Time of Recorded Heart Rates
+    """
     patient_id = fields.CharField(primary_key=True)
     attending_email = fields.EmailField()
     user_age = fields.IntegerField()
@@ -21,8 +34,13 @@ class Patient(MongoModel):
 
 
 def check_exist(info):
+    """
+    Checks if a patient and related information exists in the database/server
+    :param info: a request json file
+    :return: boolean of whether or not patient exists in server
+    """
     try:
-        Patient.objects.raw({"_id": info["patient_id"]}).first()
+        Patient.objects.raw({"_id": str(info["patient_id"])})
     except pymodm.errors.DoesNotExist:
         return False
     return True
@@ -30,6 +48,10 @@ def check_exist(info):
 
 @app.route("/api/new_patient", methods=["POST"])
 def new_patient():
+    """
+    Flask function to post a new patient to the server
+    :return:
+    """
     set_logging()
     info = request.get_json()
     valid_check = check_new_info(info)
@@ -48,12 +70,19 @@ def new_patient():
 
 
 def create_user(info):
+    """
+    Creates a new patient in the server
+    :param info: json request file containing patient id, attending email,
+    user age
+    :return:
+    """
     set_logging()
-    patient_number = info["patient_id"]
-    email = info["attending_email"]
+    patient_number = str(info["patient_id"])
+    a_email = info["attending_email"]
     age = info["user_age"]
     time_initialize = datetime.now()
-    p = Patient(patient_number, email, age, [50], [time_initialize], time_initialize)
+    p = Patient(patient_number, a_email, age, [50],
+                [time_initialize], time_initialize)
     p.save()
     logging.info("New Patient Added. ")
     patient = {
@@ -66,6 +95,11 @@ def create_user(info):
 
 
 def check_new_info(info):
+    """
+    Checks that new patient information is good
+    :param info:
+    :return:
+    """
     msg = "Data input is OK. "
     set_logging()
     try:
@@ -112,6 +146,10 @@ def check_new_info(info):
 
 @app.route("/api/heart_rate", methods=["POST"])
 def heart_rate():
+    """
+    Function to post and add new heart rate data to a patient
+    :return:
+    """
     set_logging()
     data = request.get_json()
     if check_hr_input(data) is True:
@@ -126,9 +164,12 @@ def heart_rate():
                 "Current Time": curr_time
             }
         else:
-            print("Patient ID doesn't exist. Please create new patient first.")
-            logging.error("Patient ID doesn't exist. Please create new patient first.")
-            return "Patient ID doesn't exist. Please create new patient first.", 400
+            print("Patient ID doesn't exist. Please create new "
+                  "patient first.")
+            logging.error("Patient ID doesn't exist. Please create"
+                          " new patient first.")
+            return "Patient ID doesn't exist. Please create new " \
+                   "patient first.", 400
     else:
         logging.error("Invalid Input")
         return "Invalid Input", 400
@@ -136,17 +177,53 @@ def heart_rate():
 
 
 def add_heart_rate(patient_id, hr, time):
-    p = Patient.objects.raw({"_id": patient_id}).first()
-    if p.heart_rate_times[0] == p.created:
-        p.heart_rate_times[0] = time
+    """
+    Function to append heart rate and current time to patient's info
+    :param patient_id:
+    :param hr: heart rate to be recorded
+    :param time: current time
+    :return:
+    """
+    p = Patient.objects.raw({"_id": str(patient_id)}).first()
+    if p.heart_rate_time[0] == p.created:
+        p.heart_rate_time[0] = time
         p.heart_rate[0] = hr
     else:
         p.heart_rate.append(hr)
-        p.heart_rate_times.append(time)
+        p.heart_rate_time.append(time)
+    if diagnosis(p.user_age, hr) == 'Tachycardia':
+        send_email(p.attending_email, patient_id)
     p.save()
 
 
+def send_email(a_email, patient_id):
+    """
+    Function to send email in case of Tachycardia detected
+    :param a_email: attending's email
+    :param patient_id:
+    :return:
+    """
+    sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+    from_email = Email("kck22@duke.edu")
+    to_email = Email(a_email)
+    subject = "Patient Heart Rate Warning"
+    content = Content("text/plain", "Patient:" + patient_id +
+                      " has shown signs of tachycardia based on most "
+                      "recent heart rate.")
+    mail = Mail(from_email, subject, to_email, content)
+    response = sg.client.mail.send.post(request_body=mail.get())
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+    return "email sent"
+
+
 def check_hr_input(info):
+    """
+    Check that new heart rate data is good
+    :param info:
+    :return:
+    """
     msg = "Data input is OK. "
     set_logging()
     try:
@@ -170,7 +247,7 @@ def check_hr_input(info):
         print(msg)
         logging.error(msg)
         return False
-    except ValueError:
+    except TypeError:
         msg = "Heart Rate Error. 'heart_rate' input must be a float. "
         logging.error(msg)
         print(msg)
@@ -182,6 +259,11 @@ def check_hr_input(info):
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
 def status(patient_id):
+    """
+    GET method to request recent status of patient
+    :param patient_id:
+    :return:
+    """
     set_logging()
     try:
         condition = get_status(patient_id)
@@ -194,9 +276,14 @@ def status(patient_id):
 
 
 def get_status(patient_id):
-    patient = Patient.objects.raw({"_id": patient_id}).first()
+    """
+    function to identify patient and call diagnosis function
+    :param patient_id:
+    :return:
+    """
+    patient = Patient.objects.raw({"_id": str(patient_id)}).first()
     hr = patient.heart_rate[-1]
-    condition = diagnosis(hr, patient.user_age)
+    condition = diagnosis(patient.user_age, hr)
     hr_t = patient.heart_rate_time[-1]
     data = {
         "Patient ID": patient_id,
@@ -206,7 +293,13 @@ def get_status(patient_id):
     return data
 
 
-def diagnosis(hr, age):
+def diagnosis(age, hr):
+    """
+    deteremine diagnosis based on age and heart rate
+    :param age: age of patient
+    :param hr: recorded heart rate
+    :return: condition of patient
+    """
     set_logging()
     condition = "Normal"
     if age <= 1 and hr >= 159:
@@ -221,14 +314,19 @@ def diagnosis(hr, age):
         condition = "Tachycardia"
     elif age <= 15 and hr >= 119:
         condition = "Tachycardia"
-    elif hr >= 100:
+    elif age > 15 and hr >= 100:
         condition = "Tachycardia"
     return condition
 
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
 def heart_rate_patient(patient_id):
-    #patient_id = int(patient_id)
+    """
+    GET method to return all recorded heart rates of patient
+    :param patient_id:
+    :return:
+    """
+    # patient_id = int(patient_id)
     set_logging()
     try:
         data = print_user(patient_id)
@@ -241,8 +339,13 @@ def heart_rate_patient(patient_id):
 
 
 def print_user(patient_id):
+    """
+    function to return list of heart rates for stated interval or all
+    :param patient_id:
+    :return:
+    """
     set_logging()
-    patient = Patient.objects.raw({"_id": patient_id}).first()
+    patient = Patient.objects.raw({"_id": str(patient_id)}).first()
     data = {
         "Patient ID": patient_id,
         "Recorded Heart Rates": patient.heart_rate,
@@ -253,9 +356,14 @@ def print_user(patient_id):
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
 def average_patient(patient_id):
+    """
+    GET method to return Average heart rate of patient
+    :param patient_id:
+    :return:
+    """
     set_logging()
     try:
-        hr = return_hr(patient_id)
+        [hr, hr_t] = return_hr(patient_id)
         av = average_hr(hr)
         result = {
             "Patient ID": patient_id,
@@ -269,6 +377,11 @@ def average_patient(patient_id):
 
 
 def average_hr(hr):
+    """
+    Function to calculate average heart rate
+    :param hr:
+    :return:
+    """
     set_logging()
     if len(hr) is 1:
         logging.warning("Average is calculated for only one heart rate!")
@@ -278,8 +391,13 @@ def average_hr(hr):
 
 
 def return_hr(patient_id):
+    """
+    function to call patient info and extract heart rate and time data
+    :param patient_id:
+    :return:
+    """
     set_logging()
-    patient = Patient.objects.raw({"_id": patient_id}).first()
+    patient = Patient.objects.raw({"_id": str(patient_id)}).first()
     hr = patient.heart_rate
     hr_t = patient.heart_rate_time
     return hr, hr_t
@@ -287,12 +405,18 @@ def return_hr(patient_id):
 
 @app.route("/api/heart_rate/interval_average", methods=["POST"])
 def interval_average():
+    """
+    POST method to return average heart rate over interval of time
+    :return:
+    """
     set_logging()
     info = request.get_json()
     if check_interval(info) is True:
         if check_exist(info) is True:
             try:
-                int_avg = interval(info)
+                [hr, hr_t] = return_hr(info["patient_id"])
+                t_since = info["heart_rate_average_since"]
+                int_avg = interval(hr, hr_t, t_since)
                 data = {
                     "Patient ID": info["patient_id"],
                     "Average Heart Rate": int_avg,
@@ -305,7 +429,8 @@ def interval_average():
                 return message, 400
         else:
             print("Patient ID doesn't exist. Please create new patient first.")
-            logging.error("Patient ID doesn't exist. Please create new patient first.")
+            logging.error("Patient ID doesn't exist. Please "
+                          "create new patient first.")
             return 400
     else:
         logging.error("Invalid Input")
@@ -313,18 +438,28 @@ def interval_average():
     return jsonify(data), 200
 
 
-def interval(info):
-    [hr, hr_t] = return_hr(info["patient_id"])
-    time = info["heart_rate_average_since"]
+def interval(hr, hr_t, t_since):
+    """
+    function to isolate heart rates within the interval of interest
+    :param hr:
+    :param hr_t:
+    :param t_since:
+    :return:
+    """
     hr_since = []
     for n, t in enumerate(hr_t):
-        if t > time:
+        if t > datetime.strptime(t_since, "%Y-%m-%d %H:%M:%S.%f"):
             hr_since.append(hr[n])
     average = average_hr(hr_since)
     return average
 
 
 def check_interval(info):
+    """
+    Function to check that interval average calling inputs are ok
+    :param info:
+    :return:
+    """
     msg = "Data input is OK. "
     set_logging()
     try:
@@ -344,12 +479,14 @@ def check_interval(info):
                                  "%Y-%m-%d %H:%M:%S.%f")
         logging.info("%s%s", "Time requested is valid: ", time)
     except KeyError:
-        msg = "Requested Time Error. No input provided for 'heart_rate_average_since'."
+        msg = "Requested Time Error. No input provided " \
+              "for 'heart_rate_average_since'."
         print(msg)
         logging.error(msg)
         return False
     except ValueError:
-        msg = "Requested Time Error. 'heart_rate_average_since' input must be a datetime."
+        msg = "Requested Time Error. 'heart_rate_average_since' " \
+              "input must be a datetime."
         logging.error(msg)
         print(msg)
         return False
@@ -367,4 +504,4 @@ def set_logging():
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5002)
+    app.run(host="0.0.0.0.")
