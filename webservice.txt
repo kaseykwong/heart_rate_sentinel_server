@@ -657,3 +657,26 @@ TypeError: strptime() argument 1 must be str, not datetime.datetime
 11/15/2018 08:36:17 PM Data input is OK. 
 11/15/2018 08:36:17 PM Average heart rate calculated successfully.
 11/15/2018 08:36:17 PM 127.0.0.1 - - [15/Nov/2018 20:36:17] "POST /api/heart_rate/interval_average HTTP/1.1" 200 -
+11/16/2018 12:46:50 PM Average heart rate calculated successfully.
+11/16/2018 12:46:50 PM 127.0.0.1 - - [16/Nov/2018 12:46:50] "GET /api/heart_rate/average/2 HTTP/1.1" 200 -
+12/05/2018 05:52:14 PM Data input is OK. 
+12/05/2018 05:52:14 PM Patient_ID already exists, please enter new ID. 
+12/05/2018 05:52:14 PM 127.0.0.1 - - [05/Dec/2018 17:52:14] "POST /api/new_patient HTTP/1.1" 400 -
+12/05/2018 05:53:32 PM Data input is OK. 
+12/05/2018 05:53:32 PM Patient_ID already exists, please enter new ID. 
+12/05/2018 05:53:32 PM 127.0.0.1 - - [05/Dec/2018 17:53:32] "POST /api/new_patient HTTP/1.1" 400 -
+12/05/2018 05:54:35 PM Data input is OK. 
+12/05/2018 05:54:35 PM Patient_ID already exists, please enter new ID. 
+12/05/2018 05:54:35 PM 127.0.0.1 - - [05/Dec/2018 17:54:35] "POST /api/new_patient HTTP/1.1" 400 -
+12/05/2018 05:54:44 PM Data input is OK. 
+12/05/2018 05:54:44 PM Patient_ID already exists, please enter new ID. 
+12/05/2018 05:54:44 PM 127.0.0.1 - - [05/Dec/2018 17:54:44] "POST /api/new_patient HTTP/1.1" 400 -
+12/05/2018 06:00:00 PM Data input is OK. 
+12/05/2018 06:00:00 PM New Patient Added. 
+12/05/2018 06:00:00 PM 127.0.0.1 - - [05/Dec/2018 18:00:00] "POST /api/new_patient HTTP/1.1" 200 -
+12/05/2018 06:00:46 PM Data input is OK. 
+12/05/2018 06:00:46 PM New Patient Added. 
+12/05/2018 06:00:46 PM 127.0.0.1 - - [05/Dec/2018 18:00:46] "POST /api/new_patient HTTP/1.1" 200 -
+12/05/2018 06:01:17 PM Data input is OK. 
+12/05/2018 06:01:17 PM Patient_ID already exists, please enter new ID. 
+12/05/2018 06:01:17 PM 127.0.0.1 - - [05/Dec/2018 18:01:17] "POST /api/new_patient HTTP/1.1" 400 -

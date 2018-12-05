@@ -40,7 +40,7 @@ def check_exist(info):
     :return: boolean of whether or not patient exists in server
     """
     try:
-        Patient.objects.raw({"_id": str(info["patient_id"])})
+        Patient.objects.raw({"_id": str(info["patient_id"])}).first()
     except pymodm.errors.DoesNotExist:
         return False
     return True
@@ -504,4 +504,4 @@ def set_logging():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0.")
+    app.run(host="0.0.0.0", port=5000)
